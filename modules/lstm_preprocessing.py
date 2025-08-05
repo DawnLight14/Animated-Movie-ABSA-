@@ -8,6 +8,8 @@ from nltk.stem import WordNetLemmatizer
 import numpy as np
 
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+nltk.download('wordnet')
+nltk.download('omw-1.4')
 
 lemmatizer = WordNetLemmatizer()
 
@@ -37,3 +39,4 @@ def tokenize_and_pad_lstm(pairs, tokenizer_sentence, tokenizer_aspect, maxlen_se
     aspect_padded = pad_sequences(aspect_seqs, maxlen=maxlen_aspect, padding='post', truncating='post')
 
     return sentence_padded, aspect_padded
+
