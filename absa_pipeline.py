@@ -3,6 +3,8 @@ import os
 import torch
 import pickle
 import numpy as np
+import gdown
+import zipfile
 from tensorflow.keras.models import load_model
 from tensorflow.keras.optimizers import Adam
 from transformers import AutoTokenizer, AutoModelForTokenClassification
@@ -11,8 +13,39 @@ from modules.aspect_extraction import extract_aspects
 from modules.lstm_preprocessing import preprocess_pairs, tokenize_and_pad_lstm
 from modules.sentiment_classifier import classify_sentiment_lstm
 
+# ========================
+# 🔽 CONFIG: GDrive Links
+# ========================
+LSTM_MODEL_GDRIVE_ID = "1fRpjmpF-41OQD-4vpCJIqIpA5TWVBVPI"
+BERT_MODEL_ZIP_GDRIVE_ID = "1ZVoWhjzXlKhSIWZQSG3xSF0cMv4H86U6"
+
+def download_file_from_gdrive(gdrive_id, output_path):
+    """Download file from Google Drive using gdown."""
+    if not os.path.exists(output_path):
+        url = f"https://drive.google.com/uc?id={gdrive_id}"
+        gdown.download(url, output_path, quiet=False)
+
+def prepare_models():
+    """Download LSTM model and BERT folder if not exist."""
+    os.makedirs("models", exist_ok=True)
+
+    # Download LSTM model (.h5)
+    lstm_path = os.path.join("models", "lstm_model.h5")
+    download_file_from_gdrive(LSTM_MODEL_GDRIVE_ID, lstm_path)
+
+    # Download and unzip BERT folder
+    bert_folder = os.path.join("models", "bert_ate_finetuned")
+    if not os.path.exists(bert_folder):
+        zip_path = os.path.join("models", "bert_ate_finetuned.zip")
+        download_file_from_gdrive(BERT_MODEL_ZIP_GDRIVE_ID, zip_path)
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall("models")
+        os.remove(zip_path)
 
 def run_absa_pipeline(review_text):
+    # ⏬ Pastikan model tersedia
+    prepare_models()
+
     # Preprocessing
     cleaned_text = preprocessing_umum(review_text)
     sentences = segment_sentences(cleaned_text)
@@ -36,28 +69,28 @@ def run_absa_pipeline(review_text):
     sentence_aspect_pairs = preprocess_pairs(sentences, extracted_aspects)
 
     X_sentence, X_aspect = tokenize_and_pad_lstm(
-    sentence_aspect_pairs, 
-    tokenizer_sentence, 
-    tokenizer_aspect, 
-    maxlen_sentence=500,
-    maxlen_aspect=4
+        sentence_aspect_pairs,
+        tokenizer_sentence,
+        tokenizer_aspect,
+        maxlen_sentence=500,
+        maxlen_aspect=4
     )
 
     # Load and compile LSTM model
-    # print("🚀 Loading LSTM model...")
     lstm_model_path = os.path.join("models", "lstm_model.h5")
     lstm_model = load_model(lstm_model_path)
-    # print("✅ Loaded model:", type(lstm_model))
-    lstm_model.compile(loss='binary_crossentropy',
-              optimizer=Adam(learning_rate=0.0005),
-              metrics=['accuracy'])
+    lstm_model.compile(
+        loss='binary_crossentropy',
+        optimizer=Adam(learning_rate=0.0005),
+        metrics=['accuracy']
+    )
 
     # Sentiment classification
     predictions = classify_sentiment_lstm(X_sentence, X_aspect, lstm_model)
 
     # Return list of (sentence, aspect, sentiment)
     results = [
-        {"sentence": s, "aspect": a, "sentiment": p} 
+        {"sentence": s, "aspect": a, "sentiment": p}
         for (s, a), p in zip(sentence_aspect_pairs, predictions)
     ]
     return results
