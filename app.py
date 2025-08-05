@@ -73,3 +73,4 @@ with st.expander("🧹 Reset Semua Hasil"):
         st.session_state["all_results"] = pd.DataFrame(columns=["sentence", "aspect", "sentiment"])
         st.success("Hasil telah direset.")
 
+
