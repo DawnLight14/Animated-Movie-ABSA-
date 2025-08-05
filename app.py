@@ -49,8 +49,16 @@ if not df_results.empty:
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("📊 Distribusi Sentimen")
-        fig, ax = plt.subplots(figsize=(4, 3))
-        sns.countplot(x="sentiment", data=df_results, ax=ax, palette="coolwarm")
+        sentiment_counts = df_results["sentiment"].value_counts()
+        fig, ax = plt.subplots(figsize=(4, 4))
+        ax.pie(
+            sentiment_counts,
+            labels=sentiment_counts.index,
+            autopct="%1.1f%%",
+            startangle=90,
+            colors=plt.cm.coolwarm(np.linspace(0, 1, len(sentiment_counts)))
+        )
+        ax.axis("equal")  # Agar pie chart menjadi lingkaran sempurna
         st.pyplot(fig)
 
     with col2:
@@ -64,3 +72,4 @@ with st.expander("🧹 Reset Semua Hasil"):
     if st.button("🔁 Hapus Hasil Analisis"):
         st.session_state["all_results"] = pd.DataFrame(columns=["sentence", "aspect", "sentiment"])
         st.success("Hasil telah direset.")
+
