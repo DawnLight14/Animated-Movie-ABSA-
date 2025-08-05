@@ -61,18 +61,21 @@ if not df_results.empty:
         )
         ax.axis("equal")  # Agar pie chart menjadi lingkaran sempurna
         st.pyplot(fig)
+        plt.close(fig)
 
     with col2:
         st.subheader("📊 Distribusi Aspek")
         fig2, ax2 = plt.subplots(figsize=(4, 3))
         df_results["aspect"].value_counts().plot(kind="bar", ax=ax2, color="skyblue")
         st.pyplot(fig2)
+        plt.close(fig2)
 
 # Tombol reset jika ingin menghapus semua hasil
 with st.expander("🧹 Reset Semua Hasil"):
     if st.button("🔁 Hapus Hasil Analisis"):
         st.session_state["all_results"] = pd.DataFrame(columns=["sentence", "aspect", "sentiment"])
         st.success("Hasil telah direset.")
+
 
 
 
