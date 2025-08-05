@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from absa_pipeline import run_absa_pipeline
 
 st.set_page_config(page_title="ABSA Film Animasi", layout="wide")
@@ -72,5 +73,6 @@ with st.expander("🧹 Reset Semua Hasil"):
     if st.button("🔁 Hapus Hasil Analisis"):
         st.session_state["all_results"] = pd.DataFrame(columns=["sentence", "aspect", "sentiment"])
         st.success("Hasil telah direset.")
+
 
 
