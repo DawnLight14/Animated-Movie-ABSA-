@@ -16,7 +16,7 @@ from modules.sentiment_classifier import classify_sentiment_lstm
 # ========================
 # 🔽 CONFIG: GDrive Links
 # ========================
-LSTM_MODEL_GDRIVE_ID = "1fRpjmpF-41OQD-4vpCJIqIpA5TWVBVPI"
+LSTM_MODEL_GDRIVE_ID = "14OFsGNH3xKCG0neM5_xu4VocfwJl9q42"
 BERT_MODEL_ZIP_GDRIVE_ID = "1ZVoWhjzXlKhSIWZQSG3xSF0cMv4H86U6"
 
 def download_file_from_gdrive(gdrive_id, output_path):
@@ -43,7 +43,6 @@ def prepare_models():
         os.remove(zip_path)
 
 def run_absa_pipeline(review_text):
-    # ⏬ Pastikan model tersedia
     prepare_models()
 
     # Preprocessing
@@ -94,3 +93,4 @@ def run_absa_pipeline(review_text):
         for (s, a), p in zip(sentence_aspect_pairs, predictions)
     ]
     return results
+
