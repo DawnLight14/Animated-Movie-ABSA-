@@ -71,7 +71,7 @@ def run_absa_pipeline(review_text):
         sentence_aspect_pairs,
         tokenizer_sentence,
         tokenizer_aspect,
-        maxlen_sentence=500,
+        maxlen_sentence=50,
         maxlen_aspect=4
     )
 
@@ -93,4 +93,5 @@ def run_absa_pipeline(review_text):
         for (s, a), p in zip(sentence_aspect_pairs, predictions)
     ]
     return results
+
 
