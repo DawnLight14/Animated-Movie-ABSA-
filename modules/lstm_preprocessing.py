@@ -31,7 +31,7 @@ def preprocess_pairs(sentences, extracted_aspects):
             pairs.append((preprocessing_lstm(sentence), preprocessing_lstm(aspect)))
     return pairs
 
-def tokenize_and_pad_lstm(pairs, tokenizer_sentence, tokenizer_aspect, maxlen_sentence=500, maxlen_aspect=4):
+def tokenize_and_pad_lstm(pairs, tokenizer_sentence, tokenizer_aspect, maxlen_sentence=50, maxlen_aspect=4):
     sentence_seqs = tokenizer_sentence.texts_to_sequences([p[0] for p in pairs])
     aspect_seqs = tokenizer_aspect.texts_to_sequences([p[1] for p in pairs])
 
@@ -39,4 +39,5 @@ def tokenize_and_pad_lstm(pairs, tokenizer_sentence, tokenizer_aspect, maxlen_se
     aspect_padded = pad_sequences(aspect_seqs, maxlen=maxlen_aspect, padding='post', truncating='post')
 
     return sentence_padded, aspect_padded
+
 
