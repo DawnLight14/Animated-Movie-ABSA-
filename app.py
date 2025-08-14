@@ -20,7 +20,7 @@ if "all_results" not in st.session_state:
     st.session_state["all_results"] = pd.DataFrame(columns=["sentence", "aspect", "sentiment"])
 
 review_text = st.text_area("Masukkan Ulasan Film:", height=200,
-                           placeholder="Contoh: The animation was fantastic but the story was boring.")
+                           placeholder="Contoh: The animation is fantastic but the story is boring.")
 
 if st.button("Analisis Sentimen"):
     if review_text.strip() == "":
@@ -75,6 +75,7 @@ with st.expander("🧹 Reset Semua Hasil"):
     if st.button("🔁 Hapus Hasil Analisis"):
         st.session_state["all_results"] = pd.DataFrame(columns=["sentence", "aspect", "sentiment"])
         st.success("Hasil telah direset.")
+
 
 
 
