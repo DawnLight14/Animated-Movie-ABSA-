@@ -1,43 +1,64 @@
 # Implementation of BERT and LSTM in Aspect-Based Sentiment Analysis (ABSA) on Animated Movie Review
 
-BERT–LSTM Integrated Pipeline with Analytical Insight Generation
+An end-to-end Aspect-Based Sentiment Analysis (ABSA) system applied to IMDb user reviews of Pixar and DreamWorks animated films released between 2022–2024.
 
-An end-to-end Aspect-Based Sentiment Analysis (ABSA) system applied to IMDb user reviews of Pixar and DreamWorks animated films (2022–2024).
-
-The project integrates:
-- Fine-tuned BERT for aspect extraction
-- Dual-input LSTM for aspect-level sentiment classification
-- Film-level analytical aggregation
-- Interactive Streamlit deployment
+This project was developed as an undergraduate research thesis and implements a modular research-to-deployment pipeline integrating deep learning models with film-level analytical insight generation.
 
 ---
 
-## 🚀 Key Results
+## 🎯 Project Objectives
 
-Aspect Term Extraction (BERT)
+1. Evaluate the effectiveness of a BERT–LSTM integrated pipeline for Aspect-Based Sentiment Analysis.
+2. Identify dominant narrative aspects in animated movie reviews.
+3. Analyze sentiment polarity trends across key film components.
+4. Deploy the system as an interactive web-based application using Streamlit.
+
+---
+
+## 🧠 Model Architecture
+
+The ABSA system consists of two main components:
+
+### 1️⃣ Aspect Term Extraction (ATE)
+- Model: Fine-tuned BERT (bert-base-uncased)
+- Labeling Scheme: BIO (Beginning–Inside–Outside)
+- Task: Token-level classification
+
+### 2️⃣ Aspect Sentiment Classification (ASC)
+- Model: Dual-Input LSTM
+- Inputs: (sentence, aspect) pairs
+- Output: Binary sentiment (positive / negative)
+
+Both models were trained independently using optimal hyperparameters and then integrated into a unified ABSA pipeline.
+
+---
+
+## 🚀 Performance Results
+
+### Aspect Extraction (BERT)
 - Accuracy: 99.25%
 - F1-Score: 84.74%
 
-Aspect Sentiment Classification (Dual-Input LSTM)
+### Sentiment Classification (LSTM)
 - Accuracy: 82.08%
 - F1-Macro: 82.06%
 
-Dataset Scale:
-- 6,453 reviews
-- 69,876 segmented sentences
-- 4,075 labeled sentence–aspect pairs
+These results demonstrate strong contextual extraction capability from BERT and stable sentiment classification performance from the dual-input LSTM architecture.
 
 ---
 
-## 🧠 System Capabilities
+## 📊 Dataset Overview
 
-Given a movie review, the system:
+Source: IMDb User Reviews (Web Scraping via Selenium)
 
-1. Extracts aspect terms (e.g., character, story, animation)
-2. Classifies sentiment polarity (positive / negative) for each aspect
-3. Aggregates aspect frequency across films
-4. Computes sentiment distribution per aspect
-5. Generates visual summaries (bar charts)
+- 6,453 raw reviews
+- 69,876 segmented sentences
+- 6,987 BIO-tagged sentences (10% stratified sampling)
+- 4,075 labeled sentence–aspect–sentiment pairs
+- 11 animated films (Pixar & DreamWorks, 2022–2024)
+
+⚠ Due to IMDb terms of service, the full scraped dataset is not publicly distributed.  
+Sample structured data is provided in the `data/` directory for demonstration and reproducibility purposes.
 
 ---
 
@@ -58,11 +79,11 @@ Top 10 Most Discussed Aspects:
 9. Villain (938)
 10. Humor (671)
 
-Key Observations:
+### Key Observations:
 - Animation received predominantly positive sentiment.
-- Character and Story were the most influential aspects.
+- Character and Story were the most influential aspects in audience perception.
 - Plot and Villain showed relatively higher negative polarity.
-- Narrative depth and visual execution strongly influenced audience ratings.
+- Narrative depth and visual execution strongly influenced overall audience evaluation.
 
 Detailed analytical notebooks are available in:
 
@@ -70,21 +91,23 @@ Detailed analytical notebooks are available in:
 
 ---
 
-## 🏗 Project Structure
+## 🏗 Repository Structure
 
 ```
-app.py
-absa_pipeline.py
+app.py → Streamlit interface
+absa_pipeline.py → Integrated ABSA pipeline
 
-modules/
-models/
+modules/ → Preprocessing & model utilities
+models/ → Fine-tuned model assets
 
-training/      → model development & experiments
-analysis/      → film-level aggregation & insight generation
+training/ → Model development & experiments
+analysis/ → Film-level aggregation & insight generation
+data/ → Sample structured datasets
 
 requirements.txt
 README.md
 ```
+This layered separation ensures modularity, reproducibility, and clean research-to-deployment workflow.
 
 ---
 
