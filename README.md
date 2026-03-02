@@ -1,42 +1,49 @@
 # Implementation of BERT and LSTM in Aspect-Based Sentiment Analysis (ABSA) on Animated Movie Review
 
-BERT–LSTM Integrated Pipeline with Streamlit Deployment
+BERT–LSTM Integrated Pipeline with Analytical Insight Generation
 
 An end-to-end Aspect-Based Sentiment Analysis (ABSA) system applied to IMDb user reviews of Pixar and DreamWorks animated films (2022–2024).
 
-The pipeline integrates fine-tuned BERT for aspect extraction and a dual-input LSTM for sentiment classification, followed by analytical insight generation and interactive visualization.
+The project integrates:
+- Fine-tuned BERT for aspect extraction
+- Dual-input LSTM for aspect-level sentiment classification
+- Film-level analytical aggregation
+- Interactive Streamlit deployment
 
 ---
 
 ## 🚀 Key Results
 
-**Aspect Term Extraction (BERT)**
+Aspect Term Extraction (BERT)
 - Accuracy: 99.25%
 - F1-Score: 84.74%
 
-**Sentiment Classification (Dual-Input LSTM)**
+Aspect Sentiment Classification (Dual-Input LSTM)
 - Accuracy: 82.08%
 - F1-Macro: 82.06%
 
-Dataset scale:
+Dataset Scale:
 - 6,453 reviews
 - 69,876 segmented sentences
 - 4,075 labeled sentence–aspect pairs
 
 ---
 
-## 🧠 What This System Does
+## 🧠 System Capabilities
 
 Given a movie review, the system:
 
 1. Extracts aspect terms (e.g., character, story, animation)
 2. Classifies sentiment polarity (positive / negative) for each aspect
-3. Aggregates aspect frequency
-4. Visualizes sentiment distribution and dominant trends
+3. Aggregates aspect frequency across films
+4. Computes sentiment distribution per aspect
+5. Generates visual summaries (bar charts)
 
 ---
 
-## 📊 Key Insights from Analysis
+## 📊 Film-Level Analytical Insights
+
+The system performs post-model aggregation to identify dominant narrative elements and audience perception trends.
 
 Top 10 Most Discussed Aspects:
 
@@ -51,38 +58,47 @@ Top 10 Most Discussed Aspects:
 9. Villain (938)
 10. Humor (671)
 
-Key Findings:
-- Animation received predominantly positive feedback.
-- Character and Story were widely praised.
-- Plot and Villain showed relatively higher negative sentiment.
+Key Observations:
+- Animation received predominantly positive sentiment.
+- Character and Story were the most influential aspects.
+- Plot and Villain showed relatively higher negative polarity.
+- Narrative depth and visual execution strongly influenced audience ratings.
 
-These results highlight narrative structure and visual quality as primary drivers of audience perception.
+Detailed analytical notebooks are available in:
+
+📁 `analysis/`
 
 ---
 
-## 🔗 Live Demo
+## 🏗 Project Structure
+
+```
+app.py
+absa_pipeline.py
+
+modules/
+models/
+
+training/      → model development & experiments
+analysis/      → film-level aggregation & insight generation
+
+requirements.txt
+README.md
+```
+
+---
+
+## 🌐 Live Demo
 
 Streamlit Application:
 https://animated-movie-absa.streamlit.app
 
 Features:
-- Input custom review text
+- Custom review input
 - Automatic aspect extraction
 - Aspect-level sentiment classification
 - Sentiment distribution visualization
-- Aspect frequency charts
-
----
-
-## 🏗 System Architecture
-
-Raw Review  
-→ BERT (Aspect Extraction)  
-→ Sentence–Aspect Pairing  
-→ LSTM (Sentiment Classification)  
-→ Aggregation & Visualization  
-
-The architecture is modular and supports end-to-end automated analysis.
+- Dominant aspect identification
 
 ---
 
@@ -101,26 +117,20 @@ Machine Learning:
 - Dual-Input LSTM
 - Scikit-learn
 
-Deployment:
+Visualization & Deployment:
+- Matplotlib
+- Seaborn
 - Streamlit
-- Matplotlib / Seaborn
 
 ---
 
-## 📂 Project Structure
+## 📌 Repository Layers
 
-```
-app.py
-absa_pipeline.py
-modules/
-models/
-training/
-requirements.txt
-```
+training/ → hyperparameter tuning, experiments, model evaluation  
+analysis/ → aggregated film-level insight & statistical summaries  
+app.py → deployed ABSA pipeline  
 
-For detailed model development and experiment documentation, see:
-
-📁 `training/README.md`
+This separation ensures modular development, reproducibility, and clean research-to-deployment workflow.
 
 ---
 
