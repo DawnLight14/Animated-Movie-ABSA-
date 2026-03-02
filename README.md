@@ -1,4 +1,4 @@
-# Impelementation of BERT and LSTM in Aspect-Based Sentiment Analysis (ABSA) on Animated Movie Review
+# Implementation of BERT and LSTM in Aspect-Based Sentiment Analysis (ABSA) on Animated Movie Review
 
 BERT–LSTM Integrated Pipeline with Streamlit Deployment
 
